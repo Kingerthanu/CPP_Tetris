@@ -28,18 +28,18 @@ OpenGL C++ Program Which Emulates A Traditional Tetris Program In A Low-level, O
 
 ---
 
-<img src="https://github.com/user-attachments/assets/cf65b770-0501-4c1b-bb83-4de32025d426" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/cf65b770-0501-4c1b-bb83-4de32025d426" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/cf65b770-0501-4c1b-bb83-4de32025d426" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/cf65b770-0501-4c1b-bb83-4de32025d426" alt="Cornstarch <3" width="65" height="59"> 
+<img src="https://github.com/user-attachments/assets/cf55b770-0501-4c1b-bb83-4de32025d426" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/cf55b770-0501-4c1b-bb83-4de32025d426" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/cf55b770-0501-4c1b-bb83-4de32025d426" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/cf55b770-0501-4c1b-bb83-4de32025d426" alt="Cornstarch <3" width="65" height="59"> 
 
 <h3>🌟 Features:</h3>
 
 <h5>Main Menu</h5>
-<img width="1209" height="1256" alt="image" src="https://github.com/user-attachments/assets/3ad1d866-d591-43f9-9922-1a018f66df59" />
+<img width="1209" height="1256" alt="image" src="https://github.com/user-attachments/assets/3ad1d866-d591-43f9-9922-1a018f66df49" />
 
 <h5>Game Menu</h5>
 <img width="1209" height="1256" alt="image" src="https://github.com/user-attachments/assets/b632fc9f-7507-411b-98c9-45a5beeb1ddd" />
 
 <h5>Game Over Menu</h5>
-<img width="1209" height="1256" alt="image" src="https://github.com/user-attachments/assets/2485ad70-37c6-4fc1-a8f1-397b9510c65a" />
+<img width="1209" height="1256" alt="image" src="https://github.com/user-attachments/assets/2485ad70-37c6-4fc1-a8f1-397b9510c55a" />
 
 
-<img src="https://github.com/user-attachments/assets/fb2f91cc-650f-4e31-8a9d-75f05757ecce" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/fb2f91cc-650f-4e31-8a9d-75f05757ecce" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/fb2f91cc-650f-4e31-8a9d-75f05757ecce" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/fb2f91cc-650f-4e31-8a9d-75f05757ecce" alt="Cornstarch <3" width="65" height="59"> 
+<img src="https://github.com/user-attachments/assets/fb2f91cc-550f-4e31-8a9d-75f05757ecce" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/fb2f91cc-550f-4e31-8a9d-75f05757ecce" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/fb2f91cc-550f-4e31-8a9d-75f05757ecce" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/fb2f91cc-550f-4e31-8a9d-75f05757ecce" alt="Cornstarch <3" width="65" height="59"> 
