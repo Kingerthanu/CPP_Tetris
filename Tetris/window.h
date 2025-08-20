@@ -8,6 +8,9 @@
 #include <string>
 #include <cstring>
 #include "board.h"
+#include <fstream>
+
+
 
 class Window
 {
@@ -272,7 +275,7 @@ private:
         };
 
         // Letter patterns for our UI text
-        unsigned char letterPatterns[25][8] = {
+        unsigned char letterPatterns[28][8] = {
             // S (10)
             {0b01111110, 0b11000000, 0b11000000, 0b01111110, 0b00000011, 0b00000011, 0b00000011, 0b11111110},
             // c (11)
@@ -321,6 +324,12 @@ private:
             {0b00000000, 0b00000000, 0b11101110, 0b11111111, 0b11011011, 0b11011011, 0b11011011, 0b00000000},
             // O (33) - Capital O
             {0b01111110, 0b11000011, 0b11000011, 0b11000011, 0b11000011, 0b11000011, 0b11000011, 0b01111110},
+            // d (34) - lowercase d
+            {0b00000011, 0b00000011, 0b01111111, 0b11000011, 0b11000011, 0b11000011, 0b01111111, 0b00000000},
+            // b (35) - lowercase b  
+            {0b11000000, 0b11000000, 0b11111110, 0b11000011, 0b11000011, 0b11000011, 0b11111110, 0b00000000},
+            {0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00011000, 0b00011000}
+
 
         };
 
@@ -343,7 +352,7 @@ private:
         }
 
         // Copy letter patterns to texture (starting at position 10)
-        for (int letter = 0; letter < 25; letter++) {
+        for (int letter = 0; letter < 28; letter++) {
             int charIndex = 10 + letter;
             int baseX = (charIndex % 16) * CHAR_PIXEL_SIZE;
             int baseY = (charIndex / 16) * CHAR_PIXEL_SIZE;
@@ -430,6 +439,9 @@ private:
             case 'G': return 31;
             case 'm': return 32;
             case 'O': return 33;
+            case 'd': return 34;  // New
+            case 'b': return 35;  // New
+            case '.': return 36;
             default: return 16; // Default to space
         }
     }
@@ -772,7 +784,51 @@ public:
             currentX += charSpacing;
         }
 
-        // 
+        // Leaderboard Right Column Of Screen
+		currentX = 0.15f;
+		currentY = 0.85f;
+		std::string leaderboardText = "Leaderboard:";
+        for (char c : leaderboardText) {
+            addCharToText(c, currentX, currentY, 0.65f);
+            currentX += charSpacing;
+		}
+
+		// Add scores to leaderboard
+		currentY -= 0.08f; // Move down for the next line
+        
+		std::ifstream leaderboardFile("leaderboard.txt");
+
+		if (leaderboardFile.is_open()) {
+
+            std::string line;
+			int rank = 1;
+
+            while (std::getline(leaderboardFile, line) && rank <= 10)
+            {
+
+                if (!line.empty())
+                {
+                    std::string rankText = std::to_string(rank) + ". " + line;
+
+					currentX = 0.195f; // Reset X position for each rank
+
+                    for (char c : rankText) {
+                        addCharToText(c, currentX, currentY, 0.5f);
+                        currentX += charSpacing;
+                    }
+                    currentY -= 0.08f; // Move down for the next line
+					rank++;
+                }
+
+            }
+
+			leaderboardFile.close();
+
+        }
+        else {
+            std::cerr << "Failed to open leaderboard file." << std::endl;
+		}
+
 
         // Update GPU buffers
         if (!textVertices.empty()) {
@@ -953,6 +1009,58 @@ public:
     void addScore(unsigned int points) {
         score += points;
         textNeedsUpdate = true;
+    }
+
+    void addToScoreboard(unsigned int points)
+    {
+
+		std::vector<unsigned int> scores;
+        scores.reserve(11);
+
+		std::ifstream leaderboardFile("leaderboard.txt");
+		bool scoreInserted = false;
+
+		if (leaderboardFile.is_open()) {
+
+            std::string line;
+
+			while (std::getline(leaderboardFile, line)) {
+
+                unsigned int score = std::stoul(line);
+
+                if(!scoreInserted && points > score)
+                {
+                    scores.push_back(points);
+                    scoreInserted = true;
+				}   
+
+				scores.push_back(score);
+
+            }
+
+			leaderboardFile.close();
+
+        }
+
+		if (!scoreInserted) {
+			scores.push_back(points);
+        }
+
+        // Write Back To File
+		std::ofstream outFile("leaderboard.txt");
+        if (outFile.is_open()) {
+         
+            for(unsigned int score : scores)
+            {
+                outFile << score << std::endl;
+			}
+
+            outFile.close();
+        } else {
+			std::cerr << "Failed to open leaderboard file for writing." << std::endl;
+  
+        }
+        
     }
 
     void setLevel(unsigned int newLevel) {

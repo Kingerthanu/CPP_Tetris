@@ -34,25 +34,26 @@ int main()
 		switch (gameWindow.getCurrentState())
 		{
 
-		case Window::GameState::MAIN_MENU:
-			break;
-		case Window::GameState::PLAYING:
-			if (++gameWindow.tickCount == (gameWindow.getDropSpeed()))
-			{
-				gameWindow.update(); // Update game logic
-				gameWindow.needsRedraw = true; // Mark for redraw
-
-				if (gameWindow.isGameOver())
+			case Window::GameState::MAIN_MENU:
+				break;
+			case Window::GameState::PLAYING:
+				if (++gameWindow.tickCount == (gameWindow.getDropSpeed()))
 				{
-					gameWindow.setCurrentState(Window::GameState::GAME_OVER);
-					gameWindow.setupGameOverText();
-					
-				}
+					gameWindow.update(); // Update game logic
+					gameWindow.needsRedraw = true; // Mark for redraw
 
-			}
-			break;
-		case Window::GameState::GAME_OVER:
-			break;
+					if (gameWindow.isGameOver())
+					{
+						gameWindow.setCurrentState(Window::GameState::GAME_OVER);
+						gameWindow.addToScoreboard(gameWindow.getScore());
+						gameWindow.setupGameOverText();
+					
+					}
+
+				}
+				break;
+			case Window::GameState::GAME_OVER:
+				break;
 
 		}
 
