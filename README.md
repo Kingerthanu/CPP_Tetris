@@ -25,3 +25,15 @@ OpenGL C++ Program Which Emulates A Traditional Tetris Program In A Low-level, O
 
 
 <h3>🌟 Features:</h3>
+
+<h5>Main Menu</h5>
+<img width="1209" height="1256" alt="image" src="https://github.com/user-attachments/assets/3ad1d866-d591-43f9-9922-1a018f66df49" />
+
+<h5>Game Menu</h5>
+<img width="1209" height="1256" alt="image" src="https://github.com/user-attachments/assets/b632fc9f-7507-411b-98c9-45a5beeb1ddd" />
+
+<h5>Game Over Menu</h5>
+<img width="1209" height="1256" alt="image" src="https://github.com/user-attachments/assets/2485ad70-37c6-4fc1-a8f1-397b9510c55a" />
+
+
+
