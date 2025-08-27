@@ -1043,7 +1043,7 @@ class Board
                             clearCell(i, j);
                         }
                     }
-                    clearPreviewGrid();
+
                     return;
                 }
                 return; // New Piece Placed, Wait For Next Step
@@ -1530,7 +1530,7 @@ class Board
                 this->score += rowsCleared * CONFIG::POINTS_PER_LINE;
                 this->totalRowsCleared += rowsCleared;
 
-                if (!(this->totalRowsCleared % 5))
+                if (!(this->totalRowsCleared % CONFIG::LINES_PER_LEVEL))
                 {
                     this->level++;
                 }

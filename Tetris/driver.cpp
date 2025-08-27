@@ -48,7 +48,6 @@ int main()
 						gameWindow.setCurrentState(Window::GameState::GAME_OVER);
 						gameWindow.addToScoreboard(gameWindow.getScore());
 						gameWindow.setupGameOverText();
-					
 					}
 
 				}

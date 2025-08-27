@@ -1610,9 +1610,9 @@ class Window
 		    std::ofstream outFile(CONFIG::LEADERBOARD_FILE);
             if (outFile.is_open()) {
          
-				for (size_t i = 0; i < scores.size() && i < CONFIG::MAX_LEADERBOARD_ENTRIES; ++i) 
+				for (size_t i = 0; i < scores.size() && CONFIG::MAX_LEADERBOARD_ENTRIES; ++i) 
                 {
-                    outFile << score << std::endl;
+                    outFile << scores[i] << std::endl;
 			    }
 
                 outFile.close();
