@@ -1727,7 +1727,7 @@ class Window
 
             float normLevel = std::min(level / 10.0f, 1.0f);
 		    float curve = normLevel * normLevel; // Quadratic curve for speed increase
-            return 8 - (curve * 7.0f);
+            return 25 - (curve * 24.0f);
 
 
         }

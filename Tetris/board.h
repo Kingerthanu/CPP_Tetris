@@ -9,23 +9,6 @@
 #include "block.h"
 
 
-
-/*
-
-    Desc: Utilized In The Codebase To Provide State Management Of Our Board,
-    Providing If Its Occupied, Empty, Or Empty But Ghost.
-
-*/
-enum BlockState
-{
-
-    EMPTY = 0, // Empty Cell
-    OCCUPIED = 1, // Cell Occupied By A Piece
-    GHOST = 2 // Ghost Piece
-
-};
-
-
 /*
 
     Desc: Contains All Given Shapes We Can Expect To Drop And Utilize
