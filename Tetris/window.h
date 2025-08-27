@@ -10,6 +10,7 @@
 #include <cstring>
 #include "board.h"
 #include <fstream>
+#include "config.h"
 
 
 
@@ -287,6 +288,8 @@ class Window
                         switch (key) 
                         {
                             case GLFW_KEY_ENTER:
+                                this->needsRedraw = true;
+                                this->update();
                                 currentState = GameState::PLAYING;
                                 break;
                         }
@@ -297,7 +300,7 @@ class Window
                         switch (key) 
                         {
                             case GLFW_KEY_SPACE:
-                                addScore(100);
+                                addScore(CONFIG::SPACE_BAR_POINTS);
                                 break;
                             case GLFW_KEY_LEFT:
                                 gameBoard.shiftActivePiece('L');
@@ -423,7 +426,7 @@ class Window
         {
 
             // Create A Simple Procedural Font Texture (8x8 Pixels Per Character)
-            unsigned char fontData[ATLAS_SIZE * ATLAS_SIZE];
+            unsigned char fontData[CONFIG::FONT_ATLAS_SIZE * CONFIG::FONT_ATLAS_SIZE];
             memset(fontData, 0, sizeof(fontData));
 
             // Define Simple Bitmap Patterns For Digits 0-9
@@ -737,7 +740,7 @@ class Window
             textVertices.clear();
             textIndices.clear();
 
-            float charSpacing = 0.045f;
+            float charSpacing = CONFIG::CHAR_SPACING;
             float currentX, currentY;
 
             // Add "Score:" Label
@@ -879,12 +882,12 @@ class Window
 
 
         */
-        Window(unsigned int w, unsigned int h, const char* windowTitle)
+        Window(unsigned int w = CONFIG::WINDOW_WIDTH, unsigned int h = CONFIG::WINDOW_HEIGHT, const char* windowTitle = CONFIG::WINDOW_TITLE)
             : window(nullptr), width(w), height(h), title(windowTitle),
             score(0), level(1), linesCleared(0), isInit(false),
             backgroundVAO(0), backgroundVBO(0), backgroundEBO(0),
             textVAO(0), textVBO(0), textEBO(0), fontTextureID(0),
-		    gameBoard(20, 10, w, h, this->score, this->textNeedsUpdate, this->linesCleared, this->level, this->gameOverFlag) 
+		    gameBoard(CONFIG::BOARD_ROWS, CONFIG::BOARD_COLS, w, h, this->score, this->textNeedsUpdate, this->linesCleared, this->level, this->gameOverFlag) 
         {
 
             textVertices.reserve(1000);
@@ -1045,13 +1048,13 @@ class Window
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
             // Load Shaders
-            if (!backgroundShader.loadShader("./background.vert", "./background.frag")) 
+            if (!backgroundShader.loadShader(CONFIG::SHADERS::BACKGROUND_VERTEX, CONFIG::SHADERS::BACKGROUND_FRAGMENT)) 
             {
                 std::cerr << "Failed to load background shader" << std::endl;
                 return false;
             }
 
-            if (!textShader.loadShader("./text.vert", "./text.frag")) 
+            if (!textShader.loadShader(CONFIG::SHADERS::TEXT_VERTEX, CONFIG::SHADERS::TEXT_FRAGMENT)) 
             {
                 std::cerr << "Failed to load text shader" << std::endl;
                 return false;
@@ -1387,7 +1390,7 @@ class Window
         void clear()
         {
 
-            glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+            glClearColor(CONFIG::COLORS::CLEAR_R, CONFIG::COLORS::CLEAR_G, CONFIG::COLORS::CLEAR_B, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         }
@@ -1414,9 +1417,9 @@ class Window
             backgroundShader.use();
 
             // Slowly move current color toward target color
-            currentR += (targetR - currentR) * colorTransitionSpeed;
-            currentG += (targetG - currentG) * colorTransitionSpeed;
-            currentB += (targetB - currentB) * colorTransitionSpeed;
+            currentR += (targetR - currentR) * CONFIG::COLORS::BACKGROUND_TRANSITION_SPEED;
+            currentG += (targetG - currentG) * CONFIG::COLORS::BACKGROUND_TRANSITION_SPEED;
+            currentB += (targetB - currentB) * CONFIG::COLORS::BACKGROUND_TRANSITION_SPEED;
 
             // When we get close to the target, or occasionally, pick a new random target
             if ((--colorChangeTimer <= 0) ||
@@ -1430,7 +1433,8 @@ class Window
                 targetB = (static_cast<float>(std::rand()) / 0xAfff);
 
                 // Set a random timer for when we'll pick a new color
-                colorChangeTimer = 5 + (std::rand() % 10);
+                colorChangeTimer = CONFIG::COLORS::COLOR_CHANGE_TIMER_MIN +
+					(std::rand() % (CONFIG::COLORS::COLOR_CHANGE_TIMER_MAX - CONFIG::COLORS::COLOR_CHANGE_TIMER_MIN));
             }
 
             // Send current color to shader
@@ -1570,9 +1574,9 @@ class Window
         {
 
 		    std::vector<unsigned int> scores;
-            scores.reserve(11);
+            scores.reserve(CONFIG::MAX_LEADERBOARD_ENTRIES + 1);
 
-		    std::ifstream leaderboardFile("leaderboard.txt");
+		    std::ifstream leaderboardFile(CONFIG::LEADERBOARD_FILE);
 		    bool scoreInserted = false;
 
 		    if (leaderboardFile.is_open()) {
@@ -1603,10 +1607,10 @@ class Window
             }
 
             // Write Back To File
-		    std::ofstream outFile("leaderboard.txt");
+		    std::ofstream outFile(CONFIG::LEADERBOARD_FILE);
             if (outFile.is_open()) {
          
-                for(unsigned int score : scores)
+				for (size_t i = 0; i < scores.size() && i < CONFIG::MAX_LEADERBOARD_ENTRIES; ++i) 
                 {
                     outFile << score << std::endl;
 			    }
@@ -1725,9 +1729,9 @@ class Window
         unsigned int getDropSpeed()
         {
 
-            float normLevel = std::min(level / 10.0f, 1.0f);
+            float normLevel = std::min(level / (float)CONFIG::MAX_LEVEL, 1.0f);
 		    float curve = normLevel * normLevel; // Quadratic curve for speed increase
-            return 25 - (curve * 24.0f);
+            return CONFIG::BASE_DROP_SPEED - (curve * CONFIG::SPEED_CURVE_FACTOR);
 
 
         }

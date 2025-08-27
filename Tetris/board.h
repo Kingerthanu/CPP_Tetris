@@ -7,7 +7,7 @@
 #include <vector>
 #include <iostream>
 #include "block.h"
-
+#include "config.h"
 
 /*
 
@@ -1131,6 +1131,7 @@ class Board
                         }
                     }
                 }
+
             }
 
         }
@@ -1526,7 +1527,7 @@ class Board
             if (rowCleared)
             {
                 // Add Score Based On Rows Cleared
-                this->score += rowsCleared * 100;
+                this->score += rowsCleared * CONFIG::POINTS_PER_LINE;
                 this->totalRowsCleared += rowsCleared;
 
                 if (!(this->totalRowsCleared % 5))

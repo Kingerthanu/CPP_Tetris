@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="block.h" />
     <ClInclude Include="board.h" />
+    <ClInclude Include="config.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>

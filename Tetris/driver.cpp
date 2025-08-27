@@ -1,17 +1,14 @@
 #include "window.h"
+#include "config.h"
 #include <chrono>
 #include <thread>
-
-
-
-constexpr unsigned int WINDOW_H = 1200, WINDOW_W = 1200;
 
 
 int main()
 {
 
 	// Create Our Window
-	Window gameWindow(WINDOW_H, WINDOW_W, "Tetris");
+	Window gameWindow(CONFIG::WINDOW_WIDTH, CONFIG::WINDOW_HEIGHT, CONFIG::WINDOW_TITLE);
 	if (!gameWindow.initialize())
 	{
 		return -1; // Initialization failed
@@ -19,7 +16,7 @@ int main()
 
 
 	// Throttle to 60 FPS (16.67ms per frame)
-	const std::chrono::duration<double, std::milli> frameDuration(1000.0 / 45.0);
+	const std::chrono::duration<double, std::milli> frameDuration(CONFIG::FRAME_TIME_MS);
 	std::chrono::steady_clock::time_point frameStart, frameEnd;
 	std::chrono::nanoseconds frameTime;
 
