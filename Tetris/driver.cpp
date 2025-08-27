@@ -3,11 +3,15 @@
 #include <thread>
 
 
+
+constexpr unsigned int WINDOW_H = 1200, WINDOW_W = 1200;
+
+
 int main()
 {
 
 	// Create Our Window
-	Window gameWindow(1200, 1200, "Tetris");
+	Window gameWindow(WINDOW_H, WINDOW_W, "Tetris");
 	if (!gameWindow.initialize())
 	{
 		return -1; // Initialization failed
@@ -62,21 +66,22 @@ int main()
 		{
 
 			// Pick Rendering Technique Based On State
-			switch (gameWindow.getCurrentState()) {
-			case Window::GameState::MAIN_MENU:
-				gameWindow.renderMainMenuBackground();
-				gameWindow.renderText();
-				break;
+			switch (gameWindow.getCurrentState()) 
+			{
+				case Window::GameState::MAIN_MENU:
+					gameWindow.renderMainMenuBackground();
+					gameWindow.renderText();
+					break;
 
-			case Window::GameState::PLAYING:
-				gameWindow.renderGameBackground(); // Uses bgColor for animations
-				gameWindow.renderUI();
-				break;
+				case Window::GameState::PLAYING:
+					gameWindow.renderGameBackground(); // Uses bgColor for animations
+					gameWindow.renderUI();
+					break;
 
-			case Window::GameState::GAME_OVER:
-				//gameWindow.renderGameOverBackground();
-				gameWindow.renderText();
-				break;
+				case Window::GameState::GAME_OVER:
+					//gameWindow.renderGameOverBackground();
+					gameWindow.renderText();
+					break;
 			}
 
 			gameWindow.swapBuffers();

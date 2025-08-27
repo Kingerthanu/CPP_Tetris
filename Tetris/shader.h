@@ -1,17 +1,34 @@
 #pragma once
 
+
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <glad/glad.h>
 
+
+
 class Shader
 {
 
 	private:
+
 		GLuint progID;
 
+		/*
+		
+			Desc: Loads A Shader Source File's Contents Into Memory Utilizing A std::string
+			Buffer.
+
+			Preconditions:
+				1.) filePath Is A Valid .vert Or .frag File Path
+
+			Postconditions:
+				1.) Will Return A String Containing The Text Inside The filePath
+				2.) If A Invalid File, Will Return & Notify
+
+		*/
 		std::string loadShaderSource(const std::string& filePath)
 		{
 
@@ -31,6 +48,22 @@ class Shader
 
 		}
 
+
+		/*
+
+			Desc: Will Compile A Shader Into Executable Code For The GPU Based
+			On Provided source Code As Well As The shaderType It'll Be Used For.
+
+			Preconditions:
+				1.) source Is Valid .vert Or .frag Shader Source Code
+				2.) shaderType Is Either The GL_VERTEX Or GL_FRAGMENT GLenum Type
+
+			Postconditions:
+				1.) If Compilation Succeeds, Will Return A GLuint Pointing To Where The Shader Is Held
+				2.) Compiled Shader Code Will Now Be Saved In Memory
+				3.) If Compilation Fails, Will Return & Notify
+
+		*/
 		GLuint compileShader(const std::string& source, const GLenum shaderType)
 		{
 
@@ -58,6 +91,22 @@ class Shader
 
 		
 	public:
+		
+		/*
+
+			Desc: Main Initialization Function Which Will Ingest The Paths To Both
+			Our .vert & .frag Shader And Will Grab The Source Code From The Given Files
+			Then Compile The Source Code Into Executable Logic For The GPU.
+
+			Preconditions:
+				1.) vertexPath & fragmentPath Are Both Valid Files
+				2.) vertexPath & fragmentPath Both Contain Syntactically Correct Shader Code
+
+			Postconditions:
+				1.) Both Our .vert & .frag Shader Will Be Live And Associated With A Shader
+				2.) If Loading Fails, Will Return & Notify
+		
+		*/
 		bool loadShader(const std::string& vertexPath, const std::string& fragmentPath)
 		{
 
@@ -105,11 +154,38 @@ class Shader
 
 		}
 
+
+		/*
+
+			Desc: Returns The Position In Which The Shader Is Held Within Memory In OpenGL.
+		
+			Preconditions:
+				1.) The Shader Has Been Initialized And Compiled
+				
+			Postconditions:
+				1.) Return The Location In Where Our Shader Resides In Memory
+
+		*/
 		GLuint getProgID() const
 		{
+
 			return this->progID;
+
 		}
 
+		
+		/*
+		
+			Desc: Will Activate The Given Shader To Be Utilized In The Rendering Of
+			Vertex Data.
+
+			Preconditions:
+				1.) The Shader Has Been Initialized And Compiled
+		
+			Postconditions:
+				1.) Rendering Will Now Utilize This Given Shader For It's Rendering
+
+		*/
 		void use()
 		{
 
@@ -117,6 +193,19 @@ class Shader
 
 		}
 
+
+		/*
+
+			Desc: Cleanup Routine For Shader Instance In Which We Delete Our Shader
+			Process.
+
+			Preconditions:
+				1.) The Shader Has Been Initialized And Compiled
+
+			Postconditions:
+				1.) Will Delete The Given Compiled Shader Code From Memory
+
+		*/
 		~Shader()
 		{
 
