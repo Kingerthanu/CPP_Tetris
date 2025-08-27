@@ -42,5 +42,4 @@ OpenGL C++ Program Which Emulates A Traditional Tetris Program In A Low-level, O
 <img width="1209" height="1256" alt="image" src="https://github.com/user-attachments/assets/a794f350-0a73-4fc2-900b-334b3ae2401c" />
 
 
-
-<img src="https://github.com/user-attachments/assets/fb2f91cc-550f-4e31-8a9d-75f05757ecce" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/fb2f91cc-550f-4e31-8a9d-75f05757ecce" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/fb2f91cc-550f-4e31-8a9d-75f05757ecce" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/fb2f91cc-550f-4e31-8a9d-75f05757ecce" alt="Cornstarch <3" width="65" height="59"> 
+<br><img src="https://github.com/user-attachments/assets/fb2f91cc-550f-4e31-8a9d-75f05757ecce" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/fb2f91cc-550f-4e31-8a9d-75f05757ecce" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/fb2f91cc-550f-4e31-8a9d-75f05757ecce" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/fb2f91cc-550f-4e31-8a9d-75f05757ecce" alt="Cornstarch <3" width="65" height="59"> 
