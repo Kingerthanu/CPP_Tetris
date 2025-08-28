@@ -342,9 +342,6 @@ class Board
             boardIndices = 6;  // We Used 6 Indices For The Board
             baseIndex = 4;     // We Used 4 Vertices For The Board
 
-            // 2. Generate Grid Lines
-            float gridR = 0.3f, gridG = 0.3f, gridB = 0.3f;
-
             // Vertical Grid Lines
             for (unsigned int i = 0; i <= cols; i++) {
                 float x = startX + i * cellWidth;
@@ -353,17 +350,17 @@ class Board
                 vertices.push_back(x);
                 vertices.push_back(startY);
                 vertices.push_back(0.0f);
-                vertices.push_back(gridR);
-                vertices.push_back(gridG);
-                vertices.push_back(gridB);
+                vertices.push_back(CONFIG::COLORS::GRID_R);
+                vertices.push_back(CONFIG::COLORS::GRID_G);
+                vertices.push_back(CONFIG::COLORS::GRID_B);
 
                 // Bottom Vertex Of The Line
                 vertices.push_back(x);
                 vertices.push_back(startY - boardHeight);
                 vertices.push_back(0.0f);
-                vertices.push_back(gridR);
-                vertices.push_back(gridG);
-                vertices.push_back(gridB);
+                vertices.push_back(CONFIG::COLORS::GRID_R);
+                vertices.push_back(CONFIG::COLORS::GRID_G);
+                vertices.push_back(CONFIG::COLORS::GRID_B);
 
                 // Add Indices For This Line
                 indices.push_back(baseIndex);
@@ -380,17 +377,17 @@ class Board
                 vertices.push_back(startX);
                 vertices.push_back(y);
                 vertices.push_back(0.0f);
-                vertices.push_back(gridR);
-                vertices.push_back(gridG);
-                vertices.push_back(gridB);
+                vertices.push_back(CONFIG::COLORS::GRID_R);
+                vertices.push_back(CONFIG::COLORS::GRID_G);
+                vertices.push_back(CONFIG::COLORS::GRID_B);
 
                 // Right Vertex Of The Line
                 vertices.push_back(startX + boardWidth);
                 vertices.push_back(y);
                 vertices.push_back(0.0f);
-                vertices.push_back(gridR);
-                vertices.push_back(gridG);
-                vertices.push_back(gridB);
+                vertices.push_back(CONFIG::COLORS::GRID_R);
+                vertices.push_back(CONFIG::COLORS::GRID_G);
+                vertices.push_back(CONFIG::COLORS::GRID_B);
 
                 // Add Indices For This Line
                 indices.push_back(baseIndex);
@@ -1439,7 +1436,7 @@ class Board
                 }
             }
 
-            if (ghostRow - activePieceRow < 4)
+            if (ghostRow - activePieceRow < CONFIG::MIN_GHOST_DISTANCE)
             {
                 // If The Ghost Piece Is Too Close To The Active Piece, Don't Draw It
                 return;
@@ -1450,7 +1447,7 @@ class Board
                 for (unsigned int j = 0; j < upcomingShape[i].size(); ++j) {
                     if (upcomingShape[i][j])
                     {
-                        setCellColor(ghostRow + i, ghostCol + j, glm::vec3(0.5f, 0.5f, 0.5f)); // Gray Color For Ghost Piece
+                        setCellColor(ghostRow + i, ghostCol + j, glm::vec3(CONFIG::COLORS::GHOST_R, CONFIG::COLORS::GHOST_G, CONFIG::COLORS::GHOST_B)); // Gray Color For Ghost Piece
                         gameGrid[ghostRow + i][ghostCol + j].occupied = GHOST; // Mark As Ghost
                     }
                 }

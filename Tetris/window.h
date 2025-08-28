@@ -62,11 +62,6 @@ class Window
         std::vector<float> textVertices;
         std::vector<unsigned int> textIndices;
 
-        // Character Mapping Constants
-        static constexpr float CHAR_SIZE = 1.0f / 16.0f;  // 16x16 Grid
-        static constexpr int ATLAS_SIZE = 128;  // 128x128 Texture
-        static constexpr int CHAR_PIXEL_SIZE = 8;  // 8x8 Pixels Per Character
-
         // Our GLFW Instance Of Window (Size & Name)
         GLFWwindow* window;
         unsigned int width, height;
@@ -514,7 +509,7 @@ class Window
 
             // Copy Digit Patterns To Texture (First Row)
             for (int digit = 0; digit < 10; digit++) {
-                int baseX = digit * CHAR_PIXEL_SIZE;
+                int baseX = digit * CONFIG::CHAR_PIXEL_SIZE;
                 int baseY = 0;
 
                 for (int y = 0; y < 8; y++) {
@@ -525,7 +520,7 @@ class Window
 
                         if (row & (1 << (7 - x))) 
                         {
-                            fontData[pixelY * ATLAS_SIZE + pixelX] = 255;
+                            fontData[pixelY * CONFIG::FONT_ATLAS_SIZE + pixelX] = 255;
                         }
                     }
                 }
@@ -534,8 +529,8 @@ class Window
             // Copy Letter Patterns To Texture (Starting At Position 10)
             for (int letter = 0; letter < 28; letter++) {
                 int charIndex = 10 + letter;
-                int baseX = (charIndex % 16) * CHAR_PIXEL_SIZE;
-                int baseY = (charIndex / 16) * CHAR_PIXEL_SIZE;
+                int baseX = (charIndex % 16) * CONFIG::CHAR_PIXEL_SIZE;
+                int baseY = (charIndex / 16) * CONFIG::CHAR_PIXEL_SIZE;
 
                 for (int y = 0; y < 8; y++) {
                     unsigned char row = letterPatterns[letter][y];
@@ -545,7 +540,7 @@ class Window
 
                         if (row & (1 << (7 - x))) 
                         {
-                            fontData[pixelY * ATLAS_SIZE + pixelX] = 255;
+                            fontData[pixelY * CONFIG::FONT_ATLAS_SIZE + pixelX] = 255;
                         }
                     }
                 }
@@ -555,7 +550,7 @@ class Window
             glGenTextures(1, &fontTextureID);
             glBindTexture(GL_TEXTURE_2D, fontTextureID);
 
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, ATLAS_SIZE, ATLAS_SIZE, 0, GL_RED, GL_UNSIGNED_BYTE, fontData);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, CONFIG::FONT_ATLAS_SIZE, CONFIG::FONT_ATLAS_SIZE, 0, GL_RED, GL_UNSIGNED_BYTE, fontData);
 
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -689,10 +684,10 @@ class Window
             int charIndex = getCharIndex(c);
 
             // Calculate UV Coordinates In Texture Atlas
-            float uvX = (charIndex % 16) * CHAR_SIZE;
-            float uvY = (charIndex / 16) * CHAR_SIZE;
-            float uvW = CHAR_SIZE;
-            float uvH = CHAR_SIZE;
+            float uvX = (charIndex % 16) * CONFIG::CHAR_SIZE;
+            float uvY = (charIndex / 16) * CONFIG::CHAR_SIZE;
+            float uvW = CONFIG::CHAR_SIZE;
+            float uvH = CONFIG::CHAR_SIZE;
 
             // Character Dimensions
             float charW = 0.04f * scale;
@@ -1133,7 +1128,6 @@ class Window
             textVertices.clear();
             textIndices.clear();
 
-            float charSpacing = 0.045f;
             float currentX = -0.95f;
             float currentY = -0.55f;
 
@@ -1141,7 +1135,7 @@ class Window
             std::string titleText = "Game Over";
             for (char c : titleText) {
                 addCharToText(c, currentX, currentY, 1.0f);
-                currentX += charSpacing;
+                currentX += CONFIG::CHAR_SPACING;
             }
 
 		    // Add "Score: " label
@@ -1150,7 +1144,7 @@ class Window
 		    std::string scoreLabel = "Score: " + std::to_string(this->score);
             for(char c: scoreLabel) {
                 addCharToText(c, currentX, currentY, 1.0f);
-                currentX += charSpacing;
+                currentX += CONFIG::CHAR_SPACING;
 		    }
 
             // Add "Press Enter to Restart" instruction
@@ -1159,7 +1153,7 @@ class Window
             std::string instructionText = "Press Enter to Restart";
             for (char c : instructionText) {
                 addCharToText(c, currentX, currentY, 1.0f);
-                currentX += charSpacing;
+                currentX += CONFIG::CHAR_SPACING;
             }
 
             // Leaderboard Right Column Of Screen
@@ -1168,7 +1162,7 @@ class Window
 		    std::string leaderboardText = "Leaderboard:";
             for (char c : leaderboardText) {
                 addCharToText(c, currentX, currentY, 0.65f);
-                currentX += charSpacing;
+                currentX += CONFIG::CHAR_SPACING;
 		    }
 
 		    // Add scores to leaderboard
@@ -1182,7 +1176,7 @@ class Window
                 std::string line;
 			    int rank = 1;
 
-                while (std::getline(leaderboardFile, line) && rank <= 10)
+                while (std::getline(leaderboardFile, line) && rank <= CONFIG::MAX_LEADERBOARD_ENTRIES)
                 {
 
                     if (!line.empty())
@@ -1193,7 +1187,7 @@ class Window
 
                         for (char c : rankText) {
                             addCharToText(c, currentX, currentY, 0.5f);
-                            currentX += charSpacing;
+                            currentX += CONFIG::CHAR_SPACING;
                         }
                         currentY -= 0.08f; // Move down for the next line
 					    rank++;
@@ -1610,7 +1604,7 @@ class Window
 		    std::ofstream outFile(CONFIG::LEADERBOARD_FILE);
             if (outFile.is_open()) {
          
-				for (size_t i = 0; i < scores.size() && CONFIG::MAX_LEADERBOARD_ENTRIES; ++i) 
+				for (size_t i = 0; i < scores.size() && i < CONFIG::MAX_LEADERBOARD_ENTRIES; ++i) 
                 {
                     outFile << scores[i] << std::endl;
 			    }
