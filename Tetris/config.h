@@ -31,6 +31,10 @@ namespace CONFIG
     constexpr unsigned int BOARD_ROWS = 20;
     constexpr unsigned int BOARD_COLS = 10;
 
+    // Preview Board Dimensions
+    constexpr unsigned int PREVIEW_ROWS = 4;
+    constexpr unsigned int PREVIEW_COLS = 4;
+
 
 
     // ==============================================

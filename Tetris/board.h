@@ -52,8 +52,6 @@ class Board
 
         // Window Displaying Next Up Shape
         Block** previewGrid;
-        static const unsigned int PREVIEW_ROWS = 4;
-        static const unsigned int PREVIEW_COLS = 4;
         unsigned int previewGridIndices;            // Indices For Preview Grid Lines
         unsigned int previewCellIndices;            // Indices For Preview Cells
         std::vector<std::vector<bool>> nextShape;
@@ -214,10 +212,10 @@ class Board
             }
 
             // Initialize Preview Grid
-            previewGrid = new Block * [PREVIEW_ROWS];
-            for (unsigned int i = 0; i < PREVIEW_ROWS; ++i) {
-                previewGrid[i] = new Block[PREVIEW_COLS];
-                for (unsigned int j = 0; j < PREVIEW_COLS; ++j) {
+            previewGrid = new Block * [CONFIG::PREVIEW_ROWS];
+            for (unsigned int i = 0; i < CONFIG::PREVIEW_ROWS; ++i) {
+                previewGrid[i] = new Block[CONFIG::PREVIEW_COLS];
+                for (unsigned int j = 0; j < CONFIG::PREVIEW_COLS; ++j) {
                     previewGrid[i][j] = { 0, 0, EMPTY };
                 }
             }
@@ -575,14 +573,14 @@ class Board
             float gridWidth = boxWidth - 2 * gridPadding;
             float gridHeight = boxHeight - 2 * gridPadding;
 
-            float cellWidth = gridWidth / PREVIEW_COLS;
-            float cellHeight = gridHeight / PREVIEW_ROWS;
+            float cellWidth = gridWidth / CONFIG::PREVIEW_COLS;
+            float cellHeight = gridHeight / CONFIG::PREVIEW_ROWS;
 
             // Grid Line Color
             float gridR = 0.4f, gridG = 0.4f, gridB = 0.4f;
 
             // Vertical Grid Lines
-            for (unsigned int i = 0; i <= PREVIEW_COLS; i++)
+            for (unsigned int i = 0; i <= CONFIG::PREVIEW_COLS; i++)
             {
                 float x = gridStartX + i * cellWidth;
                 // Top Vertex Of The Line
@@ -608,7 +606,7 @@ class Board
             }
 
             // Horizontal Grid Lines
-            for (unsigned int i = 0; i <= PREVIEW_ROWS; i++) {
+            for (unsigned int i = 0; i <= CONFIG::PREVIEW_ROWS; i++) {
                 float y = gridStartY - i * cellHeight;
 
                 // Left Vertex
@@ -633,13 +631,13 @@ class Board
                 baseIndex += 2;
             }
 
-            previewGridIndices = (PREVIEW_COLS + 1) * 2 + (PREVIEW_ROWS + 1) * 2;
+            previewGridIndices = (CONFIG::PREVIEW_COLS + 1) * 2 + (CONFIG::PREVIEW_ROWS + 1) * 2;
 
             // Create Preview Cells
             float cellPadding = 0.002f;
 
-            for (unsigned int row = 0; row < PREVIEW_ROWS; row++) {
-                for (unsigned int col = 0; col < PREVIEW_COLS; col++) {
+            for (unsigned int row = 0; row < CONFIG::PREVIEW_ROWS; row++) {
+                for (unsigned int col = 0; col < CONFIG::PREVIEW_COLS; col++) {
                     float cellX = gridStartX + col * cellWidth + cellPadding;
                     float cellY = gridStartY - row * cellHeight - cellPadding;
                     float cellW = cellWidth - 2 * cellPadding;
@@ -693,7 +691,7 @@ class Board
                 }
             }
 
-            previewCellIndices = PREVIEW_ROWS * PREVIEW_COLS * 6;
+            previewCellIndices = CONFIG::PREVIEW_ROWS * CONFIG::PREVIEW_COLS * 6;
 
         }
 
@@ -717,7 +715,7 @@ class Board
         void setPreviewCellColor(unsigned int row, unsigned int col, const glm::vec3& color)
         {
 
-            if (row >= PREVIEW_ROWS || col >= PREVIEW_COLS) return;
+            if (row >= CONFIG::PREVIEW_ROWS || col >= CONFIG::PREVIEW_COLS) return;
 
             // Each Preview Cell Has 4 Vertices, Each Vertex Has 6 Floats (x,y,z,r,g,b)
             unsigned int vboStart = previewGrid[row][col].vboOffset;
@@ -779,8 +777,8 @@ class Board
         void clearPreviewGrid() 
         {
 
-            for (unsigned int i = 0; i < PREVIEW_ROWS; ++i) {
-                for (unsigned int j = 0; j < PREVIEW_COLS; ++j) {
+            for (unsigned int i = 0; i < CONFIG::PREVIEW_ROWS; ++i) {
+                for (unsigned int j = 0; j < CONFIG::PREVIEW_COLS; ++j) {
                     clearPreviewCell(i, j);
                 }
             }
@@ -858,8 +856,8 @@ class Board
         {
     
             // Clear All Preview Cells First
-            for (unsigned int i = 0; i < PREVIEW_ROWS; ++i) {
-                for (unsigned int j = 0; j < PREVIEW_COLS; ++j) {
+            for (unsigned int i = 0; i < CONFIG::PREVIEW_ROWS; ++i) {
+                for (unsigned int j = 0; j < CONFIG::PREVIEW_COLS; ++j) {
                     // Just Like clearCell Does For The Main Grid
                     setPreviewCellColor(i, j, glm::vec3(0.0f, 0.0f, 0.0f));
                     previewGrid[i][j].occupied = EMPTY;
@@ -871,8 +869,8 @@ class Board
             // Skip If No Next Shape
             if (!nextShape.empty()) {
                 // Center The Shape In The Preview Grid
-                unsigned int startRow = (PREVIEW_ROWS - nextShape.size()) / 2;
-                unsigned int startCol = (PREVIEW_COLS - nextShape[0].size()) / 2;
+                unsigned int startRow = (CONFIG::PREVIEW_ROWS - nextShape.size()) / 2;
+                unsigned int startCol = (CONFIG::PREVIEW_COLS - nextShape[0].size()) / 2;
 
                 // Set Colors For The Next Shape Cells
                 for (unsigned int i = 0; i < nextShape.size(); ++i) {
@@ -1576,7 +1574,7 @@ class Board
             // Cleanup Preview Grid
             if (previewGrid)
             {
-                for (unsigned int i = 0; i < PREVIEW_ROWS; ++i) {
+                for (unsigned int i = 0; i < CONFIG::PREVIEW_ROWS; ++i) {
                     delete[] previewGrid[i];
                 }
                 delete[] previewGrid;
